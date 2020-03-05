@@ -45,6 +45,66 @@ ChatBot::~ChatBot()
 //// STUDENT CODE
 ////
 
+// copy constructot
+ChatBot::ChatBot(const ChatBot &source){
+    
+    std::cout << "ChatBot Copy Constructor" << std::endl;
+    // shallow copy
+    _chatLogic = source._chatLogic;
+    _rootNode = source._rootNode;
+
+    // deep copy
+    wxBitmap image = source._image->GetSubBitmap(wxRect(0, 0, source._image->GetWidth(), source._image->GetHeight()));
+    _image = &image;
+
+}
+
+// copy assignment operator
+ChatBot &ChatBot::operator=(const ChatBot &source){
+    std::cout << "ChatBot Copy assigment operator" << std::endl;
+    
+    if (this == &source)
+        return *this;
+    
+    // shallow copy
+    _chatLogic = source._chatLogic;
+    _rootNode = source._rootNode;
+    wxBitmap image = source._image->GetSubBitmap(wxRect(0, 0, source._image->GetWidth(), source._image->GetHeight()));
+    _image = &image;
+    return *this;
+}
+
+// move constructot
+ChatBot::ChatBot(ChatBot &&source){
+    std::cout << "ChatBot Move Constructor" << std::endl;
+  
+    // transfering resource ownership
+    _chatLogic = source._chatLogic;
+    _rootNode = source._rootNode;
+    _image = source._image;
+
+    source._chatLogic = nullptr;
+    source._rootNode = nullptr;
+    source._image = nullptr;
+} 
+
+// move assignment operator
+ChatBot &ChatBot::operator=(ChatBot &&source){
+    std::cout << "ChatBot move assigment operator" << std::endl;
+    
+    if (this == &source)
+        return *this;
+        
+    // transfering resource ownership
+    _chatLogic = source._chatLogic;
+    _rootNode = source._rootNode;
+    _image = source._image;
+
+    source._chatLogic = nullptr;
+    source._rootNode = nullptr;
+    source._image = nullptr;
+    return *this;
+}
 ////
 //// EOF STUDENT CODE
 
